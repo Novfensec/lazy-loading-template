@@ -1,0 +1,130 @@
+#: import on_switch_tabs View.HomeScreen.extensions.on_switch_tabs
+#: import BaseNavigationItem View.HomeScreen.extensions.BaseNavigationItem
+#: import SAT kivymd.uix.transition.MDSharedAxisTransition
+
+<HomeScreenView>:
+    MDScreenManager:
+        id: sub_manager_screens
+        transition: SAT()
+
+        MDScreen:
+            name: "home"
+
+            MDStackLayout:
+                size_hint: 1, 1
+                padding: [25, 25, 25, 25]
+                spacing: 25
+
+                MDWidget:
+                    size_hint: 1, None
+                    height: "50dp"
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: 10
+                    adaptive_height: True
+
+                    MDTextField:
+                        id: timeout_field
+                        mode: "filled"
+                        size_hint_x: 0.8
+                        theme_line_color: "Custom"
+                        line_color_normal: [1, 1, 1, 0]
+
+                        MDTextFieldLeadingIcon:
+                            icon:  "clock"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: app.theme_cls.primaryColor
+                            icon_color_focus: app.theme_cls.primaryColor
+
+                        MDTextFieldHintText:
+                            text: "Switch Timeout"
+                            theme_text_color: "Custom"
+                            text_color_normal: app.theme_cls.outlineColor
+
+                        MDTextFieldHelperText:
+                            mode: "persistent"
+                            text: "Only numeric values."
+
+                    MDIconButton:
+                        icon:  "sync"
+                        style: "tonal"
+                        color_map: "secodary"
+                        pos_hint: {'center_y': 0.5}
+                        theme_bg_color: "Custom"
+                        md_bg_color: [0.5, 0.6, 1, 0.1]
+                        on_press:
+                            root.set_timeout(timeout_field.text)
+
+
+        MDScreen:
+            name: "login"
+
+			MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "Login"
+                    style: "Body"
+                    role: "large"
+                    halign: "center"
+
+        MDScreen:
+            name: "settings"
+
+			MDBoxLayout:
+                orientation: "vertical"
+
+                MDLabel:
+                    text: "Settings"
+                    style: "Body"
+                    role: "large"
+                    halign: "center"
+
+    MDNavigationBar:
+        on_switch_tabs: on_switch_tabs(*args, sub_manager_screens)
+
+        BaseNavigationItem:
+			text: "Home"
+			icon: "home"
+            active: True
+
+        BaseNavigationItem:
+			text: "Login"
+			icon: "login"
+
+        BaseNavigationItem:
+			text: "Settings"
+			icon: "cog"
+
+    MDStackLayout:
+        size_hint: 1, 1
+
+        MDBoxLayout:
+            adaptive_height: True
+            padding: [20, 20, 20, 20]
+            spacing: 15
+
+            MDIconButton:
+                icon:  "menu"
+                style: "tonal"
+                color_map: "secodary"
+                theme_bg_color: "Custom"
+                md_bg_color: [0.5, 0.6, 1, 0.1]
+
+            MDIconButton:
+                icon:  "cog"
+                style: "tonal"
+                color_map: "secodary"
+                theme_bg_color: "Custom"
+                md_bg_color: [0.5, 0.6, 1, 0.1]
+                on_press: app.referrer("settings screen")
+
+<BaseNavigationItem>:
+
+    MDNavigationItemIcon:
+        icon: root.icon
+
+    MDNavigationItemLabel:
+        text: root.text
+		text_color_active: app.theme_cls.onPrimaryFixedColor

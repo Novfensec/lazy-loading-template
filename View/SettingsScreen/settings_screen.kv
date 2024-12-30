@@ -1,0 +1,140 @@
+#: import IconListItem View.SettingsScreen.extensions.IconListItem
+
+<SettingsScreenView>:
+    MDStackLayout:
+        size_hint: 1, 1 
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            adaptive_height: True
+            spacing: 15
+            padding: [ 20, 20, 20, 20]
+
+            MDIconButton:
+                icon:  "arrow-left"
+                style: "tonal"
+                color_map: "secodary"
+                theme_bg_color: "Custom"
+                md_bg_color: [0.5, 0.6, 1, 0.1]
+				on_press:
+					app.referrer("home screen")
+
+        MDScrollView:
+			do_scroll_x: False
+            SettingsScreenContext:
+                orientation: 'vertical'
+                adaptive_height: True
+                padding: [25, 25, 25, 25]
+				spacing: 15
+
+<SettingsScreenContext@MDBoxLayout>:
+	MDBoxLayout:
+		orientation: "vertical"
+		adaptive_height: True
+		radius: [25]
+
+        MDTextField:
+            mode: "filled"
+            theme_line_color: "Custom"
+            line_color_normal: [1, 1, 1, 0]
+
+            MDTextFieldLeadingIcon:
+                icon:  "magnify"
+                theme_icon_color: "Custom"
+                icon_color_normal: app.theme_cls.primaryColor
+                icon_color_focus: app.theme_cls.primaryColor
+
+            MDTextFieldHintText:
+                text: "Search"
+                theme_text_color: "Custom"
+                text_color_normal: app.theme_cls.outlineColor
+
+            MDTextFieldTrailingIcon:
+                icon: "microphone"
+                theme_icon_color: "Custom"
+                icon_color_normal: app.theme_cls.primaryColor
+                icon_color_focus: app.theme_cls.primaryColor
+
+	MDBoxLayout:
+		orientation: "vertical"
+		adaptive_height: True
+		padding: [0, 10, 0, 10]
+		spacing: 15
+
+		MDList:
+			radius: [15]
+			spacing: 10
+            cols: 1
+
+			IconListItem:
+				icon: "weather-night"
+				text: "Night Mode"
+				ripple: False
+				secondary_text: "Enabled" if mode_switch.active else "Disabled"
+
+				MDSwitch:
+					id: mode_switch
+					pos_hint: {"right": 0.95, "center_y": 0.5}
+					on_active:
+						app.apply_styles('Dark') if self.active else app.apply_styles('Light')
+
+			IconListItem:
+				icon: "bell-outline"
+				text: "Notifications"
+				ripple: False
+				secondary_text: "News and updates"
+
+				MDSwitch:
+					id: notification_switch
+					pos_hint: {"right": 0.95, "center_y": 0.5}
+
+		MDDivider:
+		MDList:
+			radius: [15]
+			spacing: 10
+            cols: 1
+
+			IconListItem:
+				icon: "magic-staff"
+				text: "Appearance"
+				secondary_text: "Themes, layout, text size"
+
+			IconListItem:
+				icon: "shield-lock-outline"
+				text: "Privacy and security"
+				secondary_text: "Terms of use and privacy policy"
+
+			IconListItem:
+				icon: "help-circle-outline"
+				text: "Help and feedback"
+				secondary_text: "FAQs, report problems, social"
+
+			IconListItem:
+				icon: "information-outline"
+				text: "About KvDeveloper"
+				secondary_text: "Updates, version"
+
+<IconListItem>:
+	size_hint: 1, None
+	height: list_item.height
+	md_bg_color: app.theme_cls.surfaceContainerLowColor
+	radius: [15]
+    padding: [5, 0, 5, 0]
+
+	MDListItem:
+		id: list_item
+        theme_bg_color: "Custom"
+        md_bg_color: 1, 1, 1, 0
+		ripple_effect: root.ripple
+
+		MDListItemLeadingIcon:
+			icon: root.icon
+			color: app.theme_cls.onPrimaryFixedVariantColor
+            theme_bg_color: "Custom"
+            md_bg_color: app.theme_cls.inversePrimaryColor
+
+		MDListItemHeadlineText:
+			text: root.text
+
+		MDListItemSupportingText:
+			text: root.secondary_text
